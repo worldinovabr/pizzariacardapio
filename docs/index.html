@@ -7,8 +7,11 @@
   <link rel="stylesheet" href="styles.css">
   <style>
   body { background: #800000; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
-    .app-bar { background: #800000; color: #ff8f00; padding: 1.2rem 1rem 1rem 1rem; font-size: 1.5rem; font-weight: bold; text-align: left; letter-spacing: 1px; }
-  .categorias { display: flex; gap: 1rem; overflow-x: auto; background: #fff; padding: 0.7rem 0.5rem; border-bottom: 1px solid #eee; justify-content: center; text-align: center; }
+    .header { text-align: center; padding: 1.5rem 1rem; }
+    .logo-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 0.5rem; }
+    .header-title { font-size: 2.5rem; font-weight: bold; color: #ff8f00; margin: 0; }
+    .header-subtitle { font-size: 1.2rem; color: #ff8f00; font-weight: bold; }
+    .categorias { display: flex; gap: 1rem; overflow-x: auto; background: #fff; padding: 0.7rem 0.5rem; border-bottom: 1px solid #eee; justify-content: center; text-align: center; }
     .cat-btn { background: none; border: none; outline: none; display: flex; flex-direction: column; align-items: center; color: #800000; font-size: 0.9rem; cursor: pointer; min-width: 64px; transition: color 0.2s; }
     .cat-btn.active, .cat-btn:hover { color: #ff8f00; }
     .cat-btn img { width: 32px; height: 32px; margin-bottom: 0.2rem; }
@@ -21,24 +24,45 @@
     .produto-preco { color: #800000; font-weight: bold; font-size: 1.1rem; }
     .add-btn { background: #ff8f00; color: #fff; border: none; border-radius: 50%; width: 36px; height: 36px; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: 0.5rem; transition: background 0.2s; }
     .add-btn:hover { background: #cc7000; }
+    .promocao-dia {
+      background: #fffae6;
+      color: #800000;
+      margin: 0;
+      padding: 0.8rem 1rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-bottom: 2px solid #ff8f00;
+      text-align: center;
+    }
+    .promocao-dia .promocao-label {
+      font-size: 1.3rem;
+    }
+    .promocao-dia .promocao-preco {
+      color: #ff8f00;
+    }
     @media (max-width: 600px) {
-      .app-bar { font-size: 1.1rem; padding: 1rem 0.5rem; }
+      .header-title { font-size: 2rem; }
+      .header-subtitle { font-size: 1rem; }
       .prod-list { padding: 0.5rem; }
       .produto { padding: 0.5rem 0.5rem; }
     }
   </style>
 </head>
 <body>
-  <div class="app-bar">Cardápio Digital</div>
+  <header class="header">
+    <img src="logopizza.png" alt="Logo Pizzaria da Barra" class="logo-img">
+    <h1 class="header-title">Pizzaria da Barra</h1>
+    <div class="header-subtitle">Cardápio Digital</div>
+  </header>
   <nav class="categorias" id="categorias">
     <button class="cat-btn active" data-cat="pizza"><img src="https://img.icons8.com/ios-filled/50/800000/pizza.png" alt="Pizza"/> Pizza</button>
     <button class="cat-btn" data-cat="calzone"><img src="https://img.icons8.com/ios-filled/50/800000/bread.png" alt="Calzone"/> Calzone</button>
     <button class="cat-btn" data-cat="borda"><img src="https://img.icons8.com/color/96/cheese.png" alt="Bordas"/> Bordas</button>
     <button class="cat-btn" data-cat="bebida"><img src="https://img.icons8.com/ios-filled/50/800000/wine-glass.png" alt="Bebidas"/> Bebidas</button>
   </nav>
-  <div class="promocao-dia" style="background:#fffae6; color:#800000; margin:0; padding:0.8rem 1rem; font-size:1.1rem; font-weight:bold; border-bottom:2px solid #ff8f00; text-align:center;">
-    <span style="font-size:1.3rem;">🎉 Promoção do Dia: </span>
-    <span>Pizza Classic + Refrigerante lata por <span style="color:#ff8f00;">R$ 69,90</span>!</span>
+  <div class="promocao-dia">
+    <span class="promocao-label">🎉 Promoção do Dia: </span>
+    <span>Pizza Classic + Refrigerante lata por <span class="promocao-preco">R$ 69,90</span>!</span>
   </div>
   <div class="prod-list" id="produtos"></div>
   <script>
