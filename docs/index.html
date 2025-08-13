@@ -45,9 +45,9 @@
     // Cardápio real da pizzaria
     const produtos = {
       pizza: [
-        { nome: 'Speed', desc: '6 fatias, 1 sabor', preco: 56, img: 'https://img.icons8.com/color/96/pizza.png' },
-        { nome: 'Classic', desc: '8 fatias, 2 sabores', preco: 65, img: 'https://img.icons8.com/color/96/pizza.png' },
-        { nome: 'Premium', desc: '12 fatias, 3 sabores', preco: 90, img: 'https://img.icons8.com/color/96/pizza.png' }
+        { nome: 'Speed', desc: '6 fatias, 1 sabor', preco: 56, img: 'https://img.icons8.com/color/48/whole-pizza.png', size: 36 },
+        { nome: 'Classic', desc: '8 fatias, 2 sabores', preco: 65, img: 'https://img.icons8.com/color/64/whole-pizza.png', size: 44 },
+        { nome: 'Premium', desc: '12 fatias, 3 sabores', preco: 90, img: 'https://img.icons8.com/color/96/whole-pizza.png', size: 56 }
       ],
       calzone: [
         { nome: 'Speed', desc: 'Até 2 sabores; totalmente salgado ou doce', preco: 55, img: 'https://img.icons8.com/color/96/bread.png' },
@@ -93,7 +93,7 @@
       const el = document.getElementById('produtos');
       el.innerHTML = lista.map(prod => `
         <div class="produto">
-          <img class="produto-img" src="${prod.img}" alt="${prod.nome}">
+          <img class="produto-img" src="${prod.img}" alt="${prod.nome}" style="width:${prod.size ? prod.size : 56}px; height:${prod.size ? prod.size : 56}px;">
           <div class="produto-info">
             <div class="produto-nome">${prod.nome}</div>
             <div class="produto-desc">${prod.desc}</div>
