@@ -1,0 +1,43 @@
+{
+  "name": "PIZZARIA DA BARRA — Cardápio",
+  "short_name": "Pizzaria da Barra",
+  "description": "Veja o cardápio da Pizzaria da Barra e faça seu pedido online.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f0f0f",
+  "theme_color": "#ff8f00",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/screenshot1.png",
+      "sizes": "540x720",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ver Cardápio",
+      "short_name": "Cardápio",
+      "description": "Acesse o cardápio rapidamente",
+      "url": "/index.html"
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+pizza",
+      "url": "/?pizza=%s"
+    }
+  ]
+}

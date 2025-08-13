@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PIZZARIA DA BARRA — Cardápio Completo</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background: #1a1010; color: #ff8f00; font-family: 'Segoe UI', Arial, sans-serif; }
+    h1, h2, h3 { color: #ff8f00; }
+    .section { margin: 2rem 0; }
+    .card { background: #2d1515; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+    .categoria { font-weight: bold; margin-top: 1.5rem; font-size: 1.2em; }
+    .obs { color: #fff3cd; font-size: 0.95em; margin-top: 1rem; }
+    .preco { color: #fff; font-weight: bold; }
+    ul { margin: 0 0 1rem 1.5rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>PIZZARIA DA BARRA</h1>
+    <h2>Cardápio digital</h2>
+
+    <div class="section card">
+      <h2>Pizzas</h2>
+      <ul>
+        <li>Speed — 6 fatias, 1 sabor: <span class="preco">R$ 56,00</span></li>
+        <li>Classic — 8 fatias, 2 sabores: <span class="preco">R$ 65,00</span></li>
+        <li>Premium — 12 fatias, 3 sabores: <span class="preco">R$ 90,00</span></li>
+      </ul>
+      <h3>Calzones (até 2 sabores; totalmente salgado ou doce)</h3>
+      <ul>
+        <li>Speed: <span class="preco">R$ 55,00</span></li>
+        <li>Classic: <span class="preco">R$ 65,00</span></li>
+        <li>Premium: <span class="preco">R$ 90,00</span></li>
+      </ul>
+      <h3>Bordas recheadas</h3>
+      <strong>Salgadas (Catupiry, Cheddar)</strong>
+      <ul>
+        <li>Speed: <span class="preco">R$ 6,00</span></li>
+        <li>Classic: <span class="preco">R$ 8,00</span></li>
+        <li>Premium: <span class="preco">R$ 10,00</span></li>
+      </ul>
+      <strong>Doces (Chocolate preto ou branco, Doce de leite)</strong>
+      <ul>
+        <li>Speed: <span class="preco">R$ 8,00</span></li>
+        <li>Classic: <span class="preco">R$ 12,00</span></li>
+        <li>Premium: <span class="preco">R$ 16,00</span></li>
+      </ul>
+      <div class="obs">Observação: Cobramos taxa de 10%.</div>
+    </div>
+
+    <div class="section card">
+      <h2>CIDADE DO ENCANTO</h2>
+      <ul>
+        <li>MODA DA BARRA — Bolonhesa, ovos, pimentão e catupiry</li>
+        <li>TAMBORETES — Camarão ao molho de estrogonofe <span class="preco">(Acréscimo R$ 10,00)</span></li>
+        <li>ILHA FEIA — Rúcula, catupiry, camarão, cebola e parmesão</li>
+        <li>INSTRIPITINGA — Rúcula, catupiry, peperone, cebola e parmesão</li>
+        <li>ILHA DOS LOBOS — Filé em tiras, cebola, catupiry e tomate cereja</li>
+        <li>COSTEIRA — Salame italiano, tomate cereja, alho poró flambado na manteiga</li>
+        <li>SALINAS — Peito de peru, bacon, cheddar, cebola e tomate cereja</li>
+        <li>TETEQUERA — Lombo, cebola, molho de pimenta</li>
+        <li>REBOJO — Calabresa, ovos, cebola e molho de pimenta</li>
+        <li>ILHA DOS REMÉDIOS — Frango, brócolis, alho frito e catupiry</li>
+        <li>LESTADA — Bacon, milho e ovos</li>
+        <li>BOCA DA BARRA — Camarão com palmito</li>
+        <li>DO CHEFÃO — Coração, ovos, alho frito, cebola e tomate cereja</li>
+        <li>DA BELA — Frango, tomate, cebola e catupiry</li>
+        <li>GAÚCHA — Filé em tiras com cebola</li>
+        <li>SHOW DE BOLA — Calabresa, catupiry, cebola bolinha e tomate cereja</li>
+        <li>RESTINGA — Alho poró flambado e tomate picado</li>
+        <li>PEREQUÊ — Bacon, palmito e catupiry</li>
+        <li>NATIVA — Filé de carne, tomate, bacon e catupiry</li>
+        <li>BARRA TICANA — Bolonhesa, cheddar, molho de pimenta e Doritos</li>
+      </ul>
+      <div class="obs">(***) Acréscimo de R$ 10,00.<br>Todas as pizzas contêm: molho, mussarela e orégano.</div>
+    </div>
+
+    <div class="section card">
+      <h2>TRADICIONAIS</h2>
+      <ul>
+        <li>Calabresa — Calabresa gourmet em fatias</li>
+        <li>Frango Catupiry — Frango ao molho desfiado com catupiry</li>
+        <li>Atum — Atum em pedaços</li>
+        <li>Bacon — Bacon gratinado ao forno</li>
+        <li>Portuguesa — Presunto, ovos, cebola, pimentão e azeitona</li>
+        <li>Mussarela — Mussarela, tomate cereja e azeitona preta</li>
+        <li>Napoli — Presunto, tomate e parmesão</li>
+        <li>Marguerita — Tomate e manjericão fresco</li>
+        <li>Alho e Óleo — Alho frito, azeite Carbonell e tomate</li>
+        <li>Quatro Queijos — Mussarela, provolone, parmesão e catupiry</li>
+        <li>Cinco Queijos — Mussarela, provolone, parmesão, catupiry e cheddar</li>
+        <li>Seis Queijos — Mussarela, provolone, parmesão, catupiry, cheddar e gorgonzola</li>
+        <li>Crocante — Bacon e batata palha</li>
+        <li>Champignon — Champignon refogado com azeite Carbonell e tempero verde</li>
+        <li>Tomate Seco — Rúcula e tomate seco</li>
+        <li>Siciliana — Bacon e champignon refogado no azeite Carbonell</li>
+        <li>Lombo Canadense — Lombo com requeijão</li>
+        <li>Catuperu — Peito de peru com catupiry</li>
+        <li>Estrogonofe de Carne — Filé ao molho estrogonofe, champignon e batata palha</li>
+        <li>Estrogonofe de Frango — Cubos de frango ao molho estrogonofe, champignon e batata palha</li>
+      </ul>
+      <div class="obs">(***) Acréscimo de R$ 10,00.<br>Todas as pizzas contêm: molho, mussarela e orégano.</div>
+    </div>
+
+    <div class="section card">
+      <h2>DOCES</h2>
+      <ul>
+        <li>Lausa — Morango, suspiro e chocolate branco</li>
+        <li>Do Norte — Chocolate preto, confete e granulado</li>
+        <li>Sensação — Chocolate preto e morango</li>
+        <li>Escadinha — Chocolate branco e morango</li>
+        <li>Meu Sonho — Chocolate branco, banana, açúcar e canela</li>
+        <li>Praia do Bispo — Chocolate branco, abacaxi e coco</li>
+        <li>Picama — Chocolate preto e banana</li>
+        <li>Só Alegria — Chocolate preto e Sonho de Valsa <span class="preco">(Acréscimo R$ 10,00)</span></li>
+        <li>Maria Fernanda — Chocolate branco e Ouro Branco <span class="preco">(Acréscimo R$ 10,00)</span></li>
+        <li>Banoffe — Chocolate branco, doce de leite, banana em rodelas e canela</li>
+        <li>Bica — Chocolate preto</li>
+        <li>Banca — Chocolate branco</li>
+        <li>Amores — Chocolate preto e branco</li>
+        <li>Prestígio — Chocolate preto e coco</li>
+        <li>Chokito — Chocolate preto ou branco com flocos de arroz</li>
+        <li>Charge — Chocolate preto, amendoim e doce de leite</li>
+        <li>Brigadeiro — Chocolate preto e brigadeiro em bolinhas <span class="preco">(Acréscimo R$ 10,00)</span></li>
+        <li>Oreo — Chocolate preto e bolacha Oreo <span class="preco">(Acréscimo R$ 10,00)</span></li>
+        <li>Oreo Baunilha — Chocolate branco e bolacha Oreo baunilha <span class="preco">(Acréscimo R$ 10,00)</span></li>
+        <li>Kit Kat — Chocolate preto e Kit Kat</li>
+      </ul>
+      <div class="obs">(***) Acréscimo de R$ 10,00.<br>Todas as pizzas doces contêm: mussarela e leite condensado.</div>
+    </div>
+
+    <div class="section card">
+      <h2>ESPECIAIS GOURMETS</h2>
+      <ul>
+        <li>Pizza Fritas com Bacon — Batata frita e bacon</li>
+        <li>Pizza Fritas com Calabresa — Batata frita e calabresa</li>
+        <li>Kartoffel — Purê de batata com bacon e catupiry</li>
+        <li>Kartoffel Bolonhesa — Purê de batata, molho bolonhesa e catupiry</li>
+        <li>Bolonhesa — Carne ao molho bolonhesa e catupiry</li>
+        <li>Toscana — Calabresa com catupiry</li>
+        <li>Francesa — Salame italiano e palmito</li>
+        <li>Salaminho — Salame italiano</li>
+        <li>Coração — Coração de frango com chimichurri</li>
+        <li>Chester — Chester fatiado com tomate e azeitona verde</li>
+        <li>Peperone — Salame tipo peperone com azeitona preta</li>
+        <li>Parmegiana — Presunto, filé, parmesão e creme culinário</li>
+        <li>Vegetariana — Tomate seco, brócolis, palmito, ervilha fresca e champignon</li>
+      </ul>
+      <div class="obs">Obs.: todas as pizzas contêm molho, mussarela e orégano.</div>
+    </div>
+
+    <div class="section card">
+      <h2>BEBIDAS</h2>
+      <ul>
+        <li>Água mineral natural — <span class="preco">R$ 5,00</span></li>
+        <li>Água mineral com gás — <span class="preco">R$ 5,00</span></li>
+        <li>Água tônica — <span class="preco">R$ 6,00</span></li>
+        <li>Cappuccino Expresso — <span class="preco">R$ 6,00</span></li>
+        <li>Chá Ice Tea Leão — <span class="preco">R$ 6,00</span></li>
+        <li>Cerveja nacional (lata — Brahma, Skol) — <span class="preco">R$ 6,00</span></li>
+        <li>Cerveja importada (long neck — Budweiser, Eisenbahn) — <span class="preco">R$ 6,00</span></li>
+        <li>Refrigerante (lata — Coca Cola, Coca Cola Zero, Guaraná, Guaraná Zero) — <span class="preco">R$ 6,00</span></li>
+        <li>Suco (lata — Del Valle: maracujá, uva, goiaba, pêssego, manga) — <span class="preco">R$ 6,00</span></li>
+        <li>Suco de laranja natural — <span class="preco">R$ 10,00</span></li>
+        <li>Vinho tinto (taça) — <span class="preco">R$ 15,00</span></li>
+        <li>Vinho branco (taça) — <span class="preco">R$ 15,00</span></li>
+        <li>Vinho tinto (garrafa) — <span class="preco">R$ 75,00</span></li>
+        <li>Vinho branco (garrafa) — <span class="preco">valor não visível</span></li>
+      </ul>
+      <div class="obs">Obs.: Cobramos taxa de 10%.</div>
+    </div>
+
+  </main>
+</body>
+</html>

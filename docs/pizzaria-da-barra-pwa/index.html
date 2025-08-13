@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PIZZARIA DA BARRA — Cardápio</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ff8f00">
+  <link rel="icon" href="icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // PWA - register service worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js');
+      });
+    }
+  </script>
+</head>
+<body>
+  <header class="app-bar">
+  <button class="back-btn" id="btnBack" aria-label="Voltar" hidden>&larr;</button>
+  <h1>PIZZARIA DA BARRA</h1>
+  </header>
+
+  <main class="container">
+    <section id="promo" class="promo-card" aria-live="polite"></section>
+
+    <nav class="tabs" id="tabs"></nav>
+
+    <section id="cards" class="grid"></section>
+
+    <p class="note" id="taxa"></p>
+  </main>
+
+  <template id="card-tpl">
+    <article class="card">
+      <img class="card-img" alt="Imagem da pizza" src="assets/pizza-placeholder.svg" loading="lazy"/>
+      <div class="card-body">
+        <h3 class="card-title"></h3>
+        <p class="card-desc"></p>
+        <div class="price-line">
+          <span class="price"></span>
+          <button class="btn-ghost">Detalhes</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <dialog id="dlg">
+    <div class="dlg-body">
+      <button class="dlg-close" id="dlgClose" aria-label="Fechar">&times;</button>
+      <h3 id="dlgTitle"></h3>
+      <p id="dlgText"></p>
+    </div>
+  </dialog>
+
+  <footer class="footer">
+    <small>&copy; <span id="year"></span> Pizzaria da Barra — Cardápio digital PWA</small>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

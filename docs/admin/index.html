@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cardápio - Pizzaria</title>
+    <link rel="stylesheet" href="../pizzaria-da-barra-pwa/styles.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <style>
+    body { background: #7a3a2a; color: #ff8f00; font-family: 'Segoe UI', Arial, sans-serif; }
+    .container { max-width: 900px; margin: 32px auto; padding: 0 16px; }
+    .header { text-align: center; margin-bottom: 32px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 24px; }
+    .card { background: #8d4a36; border-radius: 16px; box-shadow: 0 4px 16px #0004; padding: 20px; color: #ff8f00; }
+    .card-title { font-size: 1.3em; margin: 0 0 8px 0; color: #ff8f00; }
+    .card-desc { color: #ffd699; font-size: 1em; margin-bottom: 8px; }
+    .price { font-weight: bold; color: #ff8f00; font-size: 1.1em; }
+    .promo { background: #ff8f00; color: #7a3a2a; border-radius: 10px; padding: 12px; margin-bottom: 24px; text-align: center; font-weight: bold; }
+    .footer { text-align: center; color: #ffd699; margin-top: 40px; }
+    input, button, select { color: #7a3a2a; }
+    </style>
+</head>
+<body>
+        <div class="container">
+            <div class="header">
+                <h1>Cardápio Pizzaria <span style="font-size:0.6em;color:#ff8f00;">(Admin)</span></h1>
+                <div id="promo" class="promo" style="display:none"></div>
+            </div>
+            <div id="menu" class="grid"></div>
+            <div class="footer">
+                <small>&copy; <span id="year"></span> Pizzaria - Cardápio Digital</small>
+            </div>
+        </div>
+        <script>
+            // Firebase config
+            const firebaseConfig = {
+                apiKey: "AIzaSyCPeNc1uPmxStjIfEZJqjeN-ntcwVgjB-I",
+                authDomain: "pizzariabarra-9efdb.firebaseapp.com",
+                projectId: "pizzariabarra-9efdb",
+                storageBucket: "pizzariabarra-9efdb.firebasestorage.app",
+                messagingSenderId: "821493672837",
+                appId: "1:821493672837:web:471a7e2b4b6c59077732ec",
+                measurementId: "G-G7SCY0WWR7"
+            };
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+
+            function formatMoney(v){
+                if(v === null || v === undefined || v === '') return '—';
+                return Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+            }
+
+            let cardapio = {};
+
+            async function loadMenu(){
+                const doc = await db.collection('cardapio').doc('dados').get();
+                cardapio = doc.exists ? doc.data() : {};
+                renderMenu();
+            }
+
+            function renderMenu(){
+                // Promoção
+                const promo = cardapio.promocaoDoDia || {};
+                if(promo.nome || promo.sabores || promo.valor){
+                    document.getElementById('promo').style.display = '';
+                    document.getElementById('promo').innerHTML = `<strong>Promoção do dia:</strong> <input id='promoNome' value='${promo.nome||''}' placeholder='Nome'> <br><input id='promoSabores' value='${promo.sabores||''}' placeholder='Sabores'> <br><input id='promoValor' type='number' value='${promo.valor||''}' placeholder='Valor' style='width:80px'> <button onclick='salvarPromo()'>Salvar</button>`;
+                } else {
+                    document.getElementById('promo').style.display = '';
+                    document.getElementById('promo').innerHTML = `<button onclick='adicionarPromo()'>Adicionar promoção do dia</button>`;
+                }
+
+                let html = '';
+                // Pizzas
+                if(cardapio.pizzas && cardapio.pizzas.length){
+                    cardapio.pizzas.forEach((p, i) => {
+                        html += `<div class='card'><div class='card-title'><input value='${p.nome}' onchange='editarPizza(${i},"nome",this.value)'/></div><div class='card-desc'><input value='${p.descricao}' onchange='editarPizza(${i},"descricao",this.value)'/> <br><small>Até <input type='number' value='${p.saboresPermitidos}' style='width:40px' onchange='editarPizza(${i},"saboresPermitidos",this.value)'/> sabor(es)</small></div><div class='price'><input type='number' value='${p.valor}' style='width:80px' onchange='editarPizza(${i},"valor",this.value)'/></div><button onclick='removerPizza(${i})'>Remover</button></div>`;
+                    });
+                    html += `<div class='card'><button onclick='adicionarPizza()'>+ Adicionar Pizza</button></div>`;
+                }
+                // Calzones
+                if(cardapio.calzones && cardapio.calzones.length){
+                    cardapio.calzones.forEach((c, i) => {
+                        html += `<div class='card'><div class='card-title'>Calzone <input value='${c.nome}' onchange='editarCalzone(${i},"nome",this.value)'/></div><div class='card-desc'><input value='${c.descricao}' onchange='editarCalzone(${i},"descricao",this.value)'/></div><div class='price'><input type='number' value='${c.valor}' style='width:80px' onchange='editarCalzone(${i},"valor",this.value)'/></div><button onclick='removerCalzone(${i})'>Remover</button></div>`;
+                    });
+                    html += `<div class='card'><button onclick='adicionarCalzone()'>+ Adicionar Calzone</button></div>`;
+                }
+                // Bordas
+                if(cardapio.bordas){
+                    Object.entries(cardapio.bordas).forEach(([tipo, grupo])=>{
+                        Object.entries(grupo).forEach(([nome, precos], idx)=>{
+                            html += `<div class='card'><div class='card-title'>Borda <input value='${nome}' onchange='editarBordaNome("${tipo}","${nome}",this.value)'/> (${tipo})</div><div class='card-desc'>Speed: <input type='number' value='${precos.Speed}' style='width:60px' onchange='editarBordaPreco("${tipo}","${nome}","Speed",this.value)'/> Classic: <input type='number' value='${precos.Classic}' style='width:60px' onchange='editarBordaPreco("${tipo}","${nome}","Classic",this.value)'/> Premium: <input type='number' value='${precos.Premium}' style='width:60px' onchange='editarBordaPreco("${tipo}","${nome}","Premium",this.value)'/></div><button onclick='removerBorda("${tipo}","${nome}")'>Remover</button></div>`;
+                        });
+                        html += `<div class='card'><input id='novaBordaNome${tipo}' placeholder='Nova borda'><button onclick='adicionarBorda("${tipo}")'>+ Adicionar Borda ${tipo}</button></div>`;
+                    });
+                }
+                // Sabores
+                if(cardapio.sabores){
+                    Object.entries(cardapio.sabores).forEach(([cat, itens])=>{
+                        itens.forEach((s, i) => {
+                            html += `<div class='card'><div class='card-title'><input value='${s.nome}' onchange='editarSabor("${cat}",${i},"nome",this.value)'/> <small>(${cat})</small></div><div class='card-desc'><input value='${s.ingredientes}' onchange='editarSabor("${cat}",${i},"ingredientes",this.value)'/> <input type='number' value='${s.acrescimo||0}' style='width:60px' onchange='editarSabor("${cat}",${i},"acrescimo",this.value)'/> Acréscimo</div><button onclick='removerSabor("${cat}",${i})'>Remover</button></div>`;
+                        });
+                        html += `<div class='card'><button onclick='adicionarSabor("${cat}")'>+ Adicionar Sabor em ${cat}</button></div>`;
+                    });
+                }
+                // Bebidas
+                if(cardapio.bebidas && cardapio.bebidas.length){
+                    cardapio.bebidas.forEach((b, i) => {
+                        html += `<div class='card'><div class='card-title'><input value='${b.nome}' onchange='editarBebida(${i},"nome",this.value)'/></div><div class='card-desc'>Bebida</div><div class='price'><input type='number' value='${b.valor}' style='width:80px' onchange='editarBebida(${i},"valor",this.value)'/></div><button onclick='removerBebida(${i})'>Remover</button></div>`;
+                    });
+                    html += `<div class='card'><button onclick='adicionarBebida()'>+ Adicionar Bebida</button></div>`;
+                }
+                document.getElementById('menu').innerHTML = html;
+                document.getElementById('year').textContent = new Date().getFullYear();
+            }
+
+            // Funções de edição/salvamento
+            async function salvar(){
+                await db.collection('cardapio').doc('dados').set(cardapio);
+                loadMenu();
+            }
+            window.salvar = salvar;
+
+            function salvarPromo(){
+                cardapio.promocaoDoDia = {
+                    nome: document.getElementById('promoNome').value,
+                    sabores: document.getElementById('promoSabores').value,
+                    valor: document.getElementById('promoValor').value
+                };
+                salvar();
+            }
+            window.salvarPromo = salvarPromo;
+            function adicionarPromo(){
+                cardapio.promocaoDoDia = {nome:'', sabores:'', valor:''};
+                salvar();
+            }
+            window.adicionarPromo = adicionarPromo;
+
+            // Pizzas
+            function editarPizza(i, campo, valor){ cardapio.pizzas[i][campo] = campo==='valor'||campo==='saboresPermitidos'?Number(valor):valor; salvar(); }
+            function removerPizza(i){ cardapio.pizzas.splice(i,1); salvar(); }
+            function adicionarPizza(){ cardapio.pizzas.push({nome:'Nova',descricao:'',saboresPermitidos:1,valor:0}); salvar(); }
+            window.editarPizza = editarPizza; window.removerPizza = removerPizza; window.adicionarPizza = adicionarPizza;
+
+            // Calzones
+            function editarCalzone(i, campo, valor){ cardapio.calzones[i][campo] = campo==='valor'?Number(valor):valor; salvar(); }
+            function removerCalzone(i){ cardapio.calzones.splice(i,1); salvar(); }
+            function adicionarCalzone(){ cardapio.calzones.push({nome:'Novo',descricao:'',valor:0}); salvar(); }
+            window.editarCalzone = editarCalzone; window.removerCalzone = removerCalzone; window.adicionarCalzone = adicionarCalzone;
+
+            // Bordas
+            function editarBordaNome(tipo, nome, novoNome){
+                if(!novoNome) return;
+                cardapio.bordas[tipo][novoNome] = cardapio.bordas[tipo][nome];
+                delete cardapio.bordas[tipo][nome];
+                salvar();
+            }
+            function editarBordaPreco(tipo, nome, campo, valor){ cardapio.bordas[tipo][nome][campo] = Number(valor); salvar(); }
+            function removerBorda(tipo, nome){ delete cardapio.bordas[tipo][nome]; salvar(); }
+            function adicionarBorda(tipo){
+                const nome = document.getElementById('novaBordaNome'+tipo).value;
+                if(!nome) return;
+                cardapio.bordas[tipo][nome] = {Speed:0,Classic:0,Premium:0}; salvar();
+            }
+            window.editarBordaNome = editarBordaNome; window.editarBordaPreco = editarBordaPreco; window.removerBorda = removerBorda; window.adicionarBorda = adicionarBorda;
+
+            // Sabores
+            function editarSabor(cat, i, campo, valor){ cardapio.sabores[cat][i][campo] = campo==='acrescimo'?Number(valor):valor; salvar(); }
+            function removerSabor(cat, i){ cardapio.sabores[cat].splice(i,1); salvar(); }
+            function adicionarSabor(cat){ cardapio.sabores[cat].push({nome:'Novo sabor',ingredientes:'',acrescimo:0}); salvar(); }
+            window.editarSabor = editarSabor; window.removerSabor = removerSabor; window.adicionarSabor = adicionarSabor;
+
+            // Bebidas
+            function editarBebida(i, campo, valor){ cardapio.bebidas[i][campo] = campo==='valor'?Number(valor):valor; salvar(); }
+            function removerBebida(i){ cardapio.bebidas.splice(i,1); salvar(); }
+            function adicionarBebida(){ cardapio.bebidas.push({nome:'Nova bebida',valor:0}); salvar(); }
+            window.editarBebida = editarBebida; window.removerBebida = removerBebida; window.adicionarBebida = adicionarBebida;
+
+            loadMenu();
+        </script>
+</body>
+</html>

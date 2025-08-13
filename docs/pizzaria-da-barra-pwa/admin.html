@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PIZZARIA DA BARRA — Admin</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ff8f00">
+  <link rel="icon" href="icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="icons/icon-192.png" sizes="192x192">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js');
+      });
+    }
+  </script>
+</head>
+<body>
+  <header class="app-bar">
+    <button class="back-btn" onclick="history.back()" aria-label="Voltar">&larr;</button>
+    <h1>Admin • PIZZARIA DA BARRA</h1>
+    <a class="admin-link" href="index.html">Cliente</a>
+  </header>
+
+  <main class="container">
+    <div class="admin-tabs">
+      <button class="tab-btn active" data-tab="tabPromo">Promoção do Dia</button>
+      <button class="tab-btn" data-tab="tabPizzas">Pizzas & Calzones</button>
+      <button class="tab-btn" data-tab="tabSabores">Sabores</button>
+      <button class="tab-btn" data-tab="tabBordas">Bordas</button>
+      <button class="tab-btn" data-tab="tabBebidas">Bebidas</button>
+      <button class="tab-btn" data-tab="tabBackup">Backup (JSON)</button>
+    </div>
+
+    <section id="tabPromo" class="panel active">
+      <h2>Promoção do Dia</h2>
+      <form id="formPromo" class="form-grid">
+        <label>Nome<input name="nome" placeholder="Ex.: Promo Clássica"></label>
+        <label>Sabores<input name="sabores" placeholder="Ex.: Calabresa, Mussarela"></label>
+        <label>Valor (R$)<input name="valor" type="number" step="0.01" placeholder="Ex.: 49.90"></label>
+        <div class="actions">
+          <button type="submit" class="btn-primary">Salvar</button>
+          <button type="button" id="btnClearPromo" class="btn-ghost">Limpar</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="tabPizzas" class="panel">
+      <h2>Pizzas & Calzones</h2>
+      <div class="two-col">
+        <div>
+          <h3>Tamanhos de Pizza</h3>
+          <table class="table" id="tblPizzas">
+            <thead><tr><th>Nome</th><th>Descrição</th><th>Sabores</th><th>Valor (R$)</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <button id="addPizza" class="btn-ghost">+ Adicionar pizza</button>
+        </div>
+        <div>
+          <h3>Calzones</h3>
+          <table class="table" id="tblCalzones">
+            <thead><tr><th>Nome</th><th>Descrição</th><th>Valor (R$)</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <button id="addCalzone" class="btn-ghost">+ Adicionar calzone</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="tabSabores" class="panel">
+      <h2>Sabores</h2>
+      <label>Categoria
+        <select id="selCategoria"></select>
+      </label>
+      <table class="table" id="tblSabores">
+        <thead><tr><th>Nome</th><th>Ingredientes</th><th>Acréscimo (R$)</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <button id="addSabor" class="btn-ghost">+ Adicionar sabor</button>
+    </section>
+
+    <section id="tabBordas" class="panel">
+      <h2>Bordas recheadas</h2>
+      <div class="two-col">
+        <div>
+          <h3>Salgadas</h3>
+          <div id="bordasSalgadas"></div>
+        </div>
+        <div>
+          <h3>Doces</h3>
+          <div id="bordasDoces"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tabBebidas" class="panel">
+      <h2>Bebidas</h2>
+      <table class="table" id="tblBebidas">
+        <thead><tr><th>Nome</th><th>Valor (R$)</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <button id="addBebida" class="btn-ghost">+ Adicionar bebida</button>
+    </section>
+
+    <section id="tabBackup" class="panel">
+      <h2>Backup & Restauração</h2>
+      <div class="actions">
+        <button id="btnExport" class="btn-primary">Exportar JSON</button>
+        <label class="file-input">
+          Importar JSON <input type="file" id="fileImport" accept="application/json">
+        </label>
+        <button id="btnReset" class="btn-ghost">Restaurar dados originais</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>&copy; <span id="year"></span> Pizzaria da Barra — Admin</small>
+  </footer>
+
+  <script src="admin.js" defer></script>
+</body>
+</html>

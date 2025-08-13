@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cardápio Digital - Pizzaria da Barra</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background: #1a1010; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
+    .app-bar { background: #800000; color: #ff8f00; padding: 1.2rem 1rem 1rem 1rem; font-size: 1.5rem; font-weight: bold; text-align: left; letter-spacing: 1px; }
+    .categorias { display: flex; gap: 1rem; overflow-x: auto; background: #fff; padding: 0.7rem 0.5rem; border-bottom: 1px solid #eee; }
+    .cat-btn { background: none; border: none; outline: none; display: flex; flex-direction: column; align-items: center; color: #800000; font-size: 0.9rem; cursor: pointer; min-width: 64px; transition: color 0.2s; }
+    .cat-btn.active, .cat-btn:hover { color: #ff8f00; }
+    .cat-btn img { width: 32px; height: 32px; margin-bottom: 0.2rem; }
+    .prod-list { padding: 1rem; }
+    .produto { background: #fff; color: #1a1010; border-radius: 12px; box-shadow: 0 2px 8px #0002; display: flex; align-items: center; margin-bottom: 1rem; padding: 0.7rem 1rem; }
+    .produto-img { width: 56px; height: 56px; border-radius: 8px; object-fit: cover; margin-right: 1rem; background: #eee; }
+    .produto-info { flex: 1; }
+    .produto-nome { font-weight: bold; font-size: 1.1rem; margin-bottom: 0.2rem; }
+    .produto-desc { font-size: 0.95rem; color: #444; margin-bottom: 0.2rem; }
+    .produto-preco { color: #800000; font-weight: bold; font-size: 1.1rem; }
+    .add-btn { background: #ff8f00; color: #fff; border: none; border-radius: 50%; width: 36px; height: 36px; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: 0.5rem; transition: background 0.2s; }
+    .add-btn:hover { background: #cc7000; }
+    @media (max-width: 600px) {
+      .app-bar { font-size: 1.1rem; padding: 1rem 0.5rem; }
+      .prod-list { padding: 0.5rem; }
+      .produto { padding: 0.5rem 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-bar">Cardápio Digital</div>
+  <nav class="categorias" id="categorias">
+    <button class="cat-btn active" data-cat="pizza"><img src="https://img.icons8.com/ios-filled/50/800000/pizza.png" alt="Pizza"/> Pizza</button>
+    <button class="cat-btn" data-cat="calzone"><img src="https://img.icons8.com/ios-filled/50/800000/bread.png" alt="Calzone"/> Calzone</button>
+    <button class="cat-btn" data-cat="borda"><img src="https://img.icons8.com/color/96/cheese.png" alt="Bordas"/> Bordas</button>
+    <button class="cat-btn" data-cat="bebida"><img src="https://img.icons8.com/ios-filled/50/800000/wine-glass.png" alt="Bebidas"/> Bebidas</button>
+  </nav>
+  <div class="prod-list" id="produtos"></div>
+  <script>
+    // Cardápio real da pizzaria
+    const produtos = {
+      pizza: [
+        { nome: 'Speed', desc: '6 fatias, 1 sabor', preco: 56, img: 'https://img.icons8.com/color/96/pizza.png' },
+        { nome: 'Classic', desc: '8 fatias, 2 sabores', preco: 65, img: 'https://img.icons8.com/color/96/pizza.png' },
+        { nome: 'Premium', desc: '12 fatias, 3 sabores', preco: 90, img: 'https://img.icons8.com/color/96/pizza.png' }
+      ],
+      calzone: [
+        { nome: 'Speed', desc: 'Até 2 sabores; totalmente salgado ou doce', preco: 55, img: 'https://img.icons8.com/color/96/bread.png' },
+        { nome: 'Classic', desc: 'Até 2 sabores; totalmente salgado ou doce', preco: 65, img: 'https://img.icons8.com/color/96/bread.png' },
+        { nome: 'Premium', desc: 'Até 2 sabores; totalmente salgado ou doce', preco: 90, img: 'https://img.icons8.com/color/96/bread.png' }
+      ],
+      borda: [
+        { nome: 'Catupiry (Salgada)', desc: 'Speed', preco: 6, img: 'https://img.icons8.com/color/96/cheese.png' },
+        { nome: 'Catupiry (Salgada)', desc: 'Classic', preco: 8, img: 'https://img.icons8.com/color/96/cheese.png' },
+        { nome: 'Catupiry (Salgada)', desc: 'Premium', preco: 10, img: 'https://img.icons8.com/color/96/cheese.png' },
+        { nome: 'Cheddar (Salgada)', desc: 'Speed', preco: 6, img: 'https://img.icons8.com/color/96/cheese.png' },
+        { nome: 'Cheddar (Salgada)', desc: 'Classic', preco: 8, img: 'https://img.icons8.com/color/96/cheese.png' },
+        { nome: 'Cheddar (Salgada)', desc: 'Premium', preco: 10, img: 'https://img.icons8.com/color/96/cheese.png' },
+        { nome: 'Chocolate preto (Doce)', desc: 'Speed', preco: 8, img: 'https://img.icons8.com/color/96/chocolate-bar.png' },
+        { nome: 'Chocolate preto (Doce)', desc: 'Classic', preco: 12, img: 'https://img.icons8.com/color/96/chocolate-bar.png' },
+        { nome: 'Chocolate preto (Doce)', desc: 'Premium', preco: 16, img: 'https://img.icons8.com/color/96/chocolate-bar.png' },
+        { nome: 'Chocolate branco (Doce)', desc: 'Speed', preco: 8, img: 'https://img.icons8.com/color/96/chocolate-bar.png' },
+        { nome: 'Chocolate branco (Doce)', desc: 'Classic', preco: 12, img: 'https://img.icons8.com/color/96/chocolate-bar.png' },
+        { nome: 'Chocolate branco (Doce)', desc: 'Premium', preco: 16, img: 'https://img.icons8.com/color/96/chocolate-bar.png' },
+        { nome: 'Doce de leite (Doce)', desc: 'Speed', preco: 8, img: 'https://img.icons8.com/color/96/chocolate-bar.png' },
+        { nome: 'Doce de leite (Doce)', desc: 'Classic', preco: 12, img: 'https://img.icons8.com/color/96/chocolate-bar.png' },
+        { nome: 'Doce de leite (Doce)', desc: 'Premium', preco: 16, img: 'https://img.icons8.com/color/96/chocolate-bar.png' }
+      ],
+      bebida: [
+        { nome: 'Água mineral natural', desc: '', preco: 5, img: 'https://img.icons8.com/color/96/water-bottle.png' },
+        { nome: 'Água mineral com gás', desc: '', preco: 5, img: 'https://img.icons8.com/color/96/water-bottle.png' },
+        { nome: 'Água tônica', desc: '', preco: 6, img: 'https://img.icons8.com/color/96/water-bottle.png' },
+        { nome: 'Cappuccino Expresso', desc: '', preco: 6, img: 'https://img.icons8.com/color/96/coffee.png' },
+        { nome: 'Chá Ice Tea Leão', desc: '', preco: 6, img: 'https://img.icons8.com/color/96/tea.png' },
+        { nome: 'Cerveja nacional (lata)', desc: 'Brahma, Skol', preco: 6, img: 'https://img.icons8.com/color/96/beer.png' },
+        { nome: 'Cerveja importada (long neck)', desc: 'Budweiser, Eisenbahn', preco: 6, img: 'https://img.icons8.com/color/96/beer.png' },
+        { nome: 'Refrigerante (lata)', desc: 'Coca Cola, Guaraná, etc.', preco: 6, img: 'https://img.icons8.com/color/96/soda-can.png' },
+        { nome: 'Suco (lata)', desc: 'Del Valle: maracujá, uva, goiaba, pêssego, manga', preco: 6, img: 'https://img.icons8.com/color/96/orange-juice.png' },
+        { nome: 'Suco de laranja natural', desc: '', preco: 10, img: 'https://img.icons8.com/color/96/orange-juice.png' },
+        { nome: 'Vinho tinto (taça)', desc: '', preco: 15, img: 'https://img.icons8.com/color/96/wine-glass.png' },
+        { nome: 'Vinho branco (taça)', desc: '', preco: 15, img: 'https://img.icons8.com/color/96/wine-glass.png' },
+        { nome: 'Vinho tinto (garrafa)', desc: '', preco: 75, img: 'https://img.icons8.com/color/96/wine-bottle.png' },
+        { nome: 'Vinho branco (garrafa)', desc: '', preco: null, img: 'https://img.icons8.com/color/96/wine-bottle.png' }
+      ]
+    };
+    function renderProdutos(cat) {
+      const lista = produtos[cat] || [];
+      const el = document.getElementById('produtos');
+      el.innerHTML = lista.map(prod => `
+        <div class="produto">
+          <img class="produto-img" src="${prod.img}" alt="${prod.nome}">
+          <div class="produto-info">
+            <div class="produto-nome">${prod.nome}</div>
+            <div class="produto-desc">${prod.desc}</div>
+            <div class="produto-preco">${prod.preco !== null ? `R$ ${prod.preco.toFixed(2)}` : 'valor não visível'}</div>
+          </div>
+          <button class="add-btn" title="Adicionar">+</button>
+        </div>
+      `).join('');
+    }
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+      btn.onclick = function() {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderProdutos(btn.dataset.cat);
+      };
+    });
+    // Inicializa com a primeira categoria (pizza)
+    renderProdutos('pizza');
+  </script>
+</body>
+</html>
