@@ -11,10 +11,58 @@
     .logo-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 0.5rem; }
     .header-title { font-size: 2.5rem; font-weight: bold; color: #ff8f00; margin: 0; }
     .header-subtitle { font-size: 1.2rem; color: #ff8f00; font-weight: bold; }
-    .categorias { display: flex; gap: 1rem; overflow-x: auto; background: #fff; padding: 0.7rem 0.5rem; border-bottom: 1px solid #eee; justify-content: center; text-align: center; }
-    .cat-btn { background: none; border: none; outline: none; display: flex; flex-direction: column; align-items: center; color: #800000; font-size: 0.9rem; cursor: pointer; min-width: 64px; transition: color 0.2s; }
-    .cat-btn.active, .cat-btn:hover { color: #ff8f00; }
-    .cat-btn img { width: 32px; height: 32px; margin-bottom: 0.2rem; }
+    .categorias {
+    display: flex;
+    gap: 2.5rem;
+    overflow-x: auto;
+    background: #fff;
+    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    border-bottom: 4px solid #800000;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto 1.2rem auto;
+    max-width: 900px;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 2px 12px #0001;
+    transition: box-shadow 0.18s, border-color 0.18s;
+  }
+  .categorias:hover {
+    box-shadow: 0 4px 24px #ff8f0033;
+    border-bottom: 4px solid #ff8f00;
+  }
+    .cat-btn {
+    background: none;
+    border: none;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #800000;
+    font-size: 1.05rem;
+    cursor: pointer;
+    min-width: 64px;
+    transition: color 0.2s, transform 0.18s;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    padding: 0.2rem 0.7rem;
+    border-radius: 10px;
+  }
+  .cat-btn.active, .cat-btn:hover {
+    color: #ff8f00;
+    background: #fff3c0;
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 2px 8px #ff8f0033;
+  }
+  .cat-btn img {
+    width: 38px;
+    height: 38px;
+    margin-bottom: 0.2rem;
+    filter: drop-shadow(0 2px 4px #0001);
+    transition: filter 0.18s;
+  }
+  .cat-btn.active img, .cat-btn:hover img {
+    filter: drop-shadow(0 2px 8px #ff8f0033) brightness(1.1);
+  }
     .prod-list { padding: 1rem; }
     .produto { background: #fff; color: #1a1010; border-radius: 12px; box-shadow: 0 2px 8px #0002; display: flex; align-items: center; margin-bottom: 1rem; padding: 0.7rem 1rem; }
   .produto-img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; margin-right: 1rem; background: #eee; }
@@ -27,18 +75,103 @@
     .promocao-dia {
       background: #fffae6;
       color: #800000;
-      margin: 0;
-      padding: 0.8rem 1rem;
-      font-size: 1.1rem;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      font-size: 1.25rem;
       font-weight: bold;
-      border-bottom: 2px solid #ff8f00;
+      border-bottom: 4px solid #ff8f00;
+      border-radius: 12px;
       text-align: center;
+      max-width: 900px;
+      box-shadow: 0 2px 12px #0001, 0 0px 0px #ff8f00;
+      transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
     }
-    .promocao-dia .promocao-label {
+    .promocao-dia:hover, .promocao-dia:active {
+      background: #fff3c0;
+      color: #b71c1c;
+      box-shadow: 0 4px 24px #ff8f0033, 0 0px 0px #ff8f00;
+      transform: scale(1.025) translateY(-2px);
+      border-bottom: 4px solid #b71c1c;
+    }
+    .promocao-label {
       font-size: 1.3rem;
+      color: #b71c1c;
+      margin-right: 0.3rem;
+      vertical-align: middle;
     }
-    .promocao-dia .promocao-preco {
+    .promocao-preco {
       color: #ff8f00;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+    #sabores-container {
+      display: none;
+      padding: 1rem;
+    }
+    .sabores-categorias {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+    .sabor-card {
+      background: #fff;
+      color: #1a1010;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #0002;
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding: 0.7rem 1rem;
+      min-width: 260px;
+      max-width: 340px;
+      width: 100%;
+    }
+    .sabor-card-img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #eee;
+      margin-right: 1rem;
+      object-fit: cover;
+    }
+    .sabor-card-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .sabor-card-titulo {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #800000;
+      margin-bottom: 0.1rem;
+    }
+    .sabor-card-lista {
+      font-size: 0.98rem;
+      color: #333;
+      margin: 0;
+      padding-left: 1.1rem;
+    }
+    .voltar-btn {
+      background: #ff8f00;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1.2rem;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+    }
+    .voltar-btn:hover {
+      background: #cc7000;
     }
     @media (max-width: 600px) {
       .header-title { font-size: 2rem; }
@@ -53,18 +186,21 @@
     <img src="logopizza.png" alt="Logo Pizzaria da Barra" class="logo-img">
     <h1 class="header-title">Pizzaria da Barra</h1>
     <div class="header-subtitle">Cardápio Digital</div>
+    <div class="promocao-dia">
+      <span class="promocao-label">🎉 Promoção do Dia: </span>
+      <span>Pizza Classic + Refrigerante lata por <span class="promocao-preco">R$ 69,90</span>!</span>
+    </div>
   </header>
-  <nav class="categorias" id="categorias">
-    <button class="cat-btn active" data-cat="pizza"><img src="https://img.icons8.com/ios-filled/50/800000/pizza.png" alt="Pizza"/> Pizza</button>
-    <button class="cat-btn" data-cat="calzone"><img src="https://img.icons8.com/ios-filled/50/800000/bread.png" alt="Calzone"/> Calzone</button>
-    <button class="cat-btn" data-cat="borda"><img src="https://img.icons8.com/color/96/cheese.png" alt="Bordas"/> Bordas</button>
-    <button class="cat-btn" data-cat="bebida"><img src="https://img.icons8.com/ios-filled/50/800000/wine-glass.png" alt="Bebidas"/> Bebidas</button>
-  </nav>
-  <div class="promocao-dia">
-    <span class="promocao-label">🎉 Promoção do Dia: </span>
-    <span>Pizza Classic + Refrigerante lata por <span class="promocao-preco">R$ 69,90</span>!</span>
+  <div id="tamanhos-container">
+    <nav class="categorias" id="categorias">
+      <button class="cat-btn active" data-cat="pizza"><img src="https://img.icons8.com/ios-filled/50/800000/pizza.png" alt="Pizza"/> Pizza</button>
+      <button class="cat-btn" data-cat="calzone"><img src="https://img.icons8.com/ios-filled/50/800000/bread.png" alt="Calzone"/> Calzone</button>
+      <button class="cat-btn" data-cat="borda"><img src="https://img.icons8.com/color/96/cheese.png" alt="Bordas"/> Bordas</button>
+      <button class="cat-btn" data-cat="bebida"><img src="https://img.icons8.com/ios-filled/50/800000/wine-glass.png" alt="Bebidas"/> Bebidas</button>
+    </nav>
+    <div class="prod-list" id="produtos"></div>
   </div>
-  <div class="prod-list" id="produtos"></div>
+  <div id="sabores-container"></div>
   <script>
     // Cardápio real da pizzaria
     const produtos = {
@@ -115,17 +251,31 @@
     function renderProdutos(cat) {
       const lista = produtos[cat] || [];
       const el = document.getElementById('produtos');
-      el.innerHTML = lista.map(prod => `
-        <div class="produto">
-          <img class="produto-img" src="${prod.img}" alt="${prod.nome}" style="width:${prod.size ? prod.size : 56}px; height:${prod.size ? prod.size : 56}px;">
-          <div class="produto-info">
-            <div class="produto-nome">${prod.nome}</div>
-            <div class="produto-desc">${prod.desc}</div>
-            <div class="produto-preco">${prod.preco !== null ? `R$ ${prod.preco.toFixed(2)}` : 'valor não visível'}</div>
+      if (cat === 'pizza') {
+        el.innerHTML = lista.map(prod => `
+          <div class="produto" style="cursor:pointer;" onclick="mostrarSabores('${prod.nome}')">
+            <img class="produto-img" src="${prod.img}" alt="${prod.nome}" style="width:${prod.size ? prod.size : 56}px; height:${prod.size ? prod.size : 56}px;">
+            <div class="produto-info">
+              <div class="produto-nome">${prod.nome}</div>
+              <div class="produto-desc">${prod.desc}</div>
+              <div class="produto-preco">${prod.preco !== null ? `R$ ${prod.preco.toFixed(2)}` : 'valor não visível'}</div>
+            </div>
+            <button class="add-btn" title="Adicionar">+</button>
           </div>
-          <button class="add-btn" title="Adicionar">+</button>
-        </div>
-      `).join('');
+        `).join('');
+      } else {
+        el.innerHTML = lista.map(prod => `
+          <div class="produto">
+            <img class="produto-img" src="${prod.img}" alt="${prod.nome}" style="width:${prod.size ? prod.size : 56}px; height:${prod.size ? prod.size : 56}px;">
+            <div class="produto-info">
+              <div class="produto-nome">${prod.nome}</div>
+              <div class="produto-desc">${prod.desc}</div>
+              <div class="produto-preco">${prod.preco !== null ? `R$ ${prod.preco.toFixed(2)}` : 'valor não visível'}</div>
+            </div>
+            <button class="add-btn" title="Adicionar">+</button>
+          </div>
+        `).join('');
+      }
     }
     document.querySelectorAll('.cat-btn').forEach(btn => {
       btn.onclick = function() {
@@ -136,6 +286,118 @@
     });
     // Inicializa com a primeira categoria (pizza)
     renderProdutos('pizza');
+    // --- NOVA ESTRUTURA DE SABORES ---
+    const saboresPorCategoria = {
+      'Cidade do Encanto': [
+        'MODA DA BARRA — Bolonhesa, ovos, pimentão e catupiry',
+        'TAMBORETES — Camarão ao molho de estrogonofe (***)',
+        'ILHA FEIA — Rúcula, catupiry, camarão, cebola e parmesão',
+        'INSTRIPITINGA — Rúcula, catupiry, peperone, cebola e parmesão',
+        'ILHA DOS LOBOS — Filé em tiras, cebola, catupiry e tomate cereja',
+        'COSTEIRA — Salame italiano, tomate cereja, alho poró flambado na manteiga',
+        'SALINAS — Peito de peru, bacon, cheddar, cebola e tomate cereja',
+        'TETEQUERA — Lombo, cebola, molho de pimenta',
+        'REBOJO — Calabresa, ovos, cebola e molho de pimenta',
+        'ILHA DOS REMÉDIOS — Frango, brócolis, alho frito e catupiry',
+        'LESTADA — Bacon, milho e ovos',
+        'BOCA DA BARRA — Camarão com palmito',
+        'DO CHEFÃO — Coração, ovos, alho frito, cebola e tomate cereja',
+        'DA BELA — Frango, tomate, cebola e catupiry',
+        'GAÚCHA — Filé em tiras com cebola',
+        'SHOW DE BOLA — Calabresa, catupiry, cebola bolinha e tomate cereja',
+        'RESTINGA — Alho poró flambado e tomate picado',
+        'PEREQUÊ — Bacon, palmito e catupiry',
+        'NATIVA — Filé de carne, tomate, bacon e catupiry',
+        'BARRA TICANA — Bolonhesa, cheddar, molho de pimenta e Doritos'
+      ],
+      'Tradicionais': [
+        'Calabresa — Calabresa gourmet em fatias',
+        'Frango Catupiry — Frango ao molho desfiado com catupiry',
+        'Atum — Atum em pedaços',
+        'Bacon — Bacon gratinado ao forno',
+        'Portuguesa — Presunto, ovos, cebola, pimentão e azeitona',
+        'Mussarela — Mussarela, tomate cereja e azeitona preta',
+        'Napoli — Presunto, tomate e parmesão',
+        'Marguerita — Tomate e manjericão fresco',
+        'Alho e Óleo — Alho frito, azeite Carbonell e tomate',
+        'Quatro Queijos — Mussarela, provolone, parmesão e catupiry',
+        'Cinco Queijos — Mussarela, provolone, parmesão, catupiry e cheddar',
+        'Seis Queijos — Mussarela, provolone, parmesão, catupiry, cheddar e gorgonzola',
+        'Crocante — Bacon e batata palha',
+        'Champignon — Champignon refogado com azeite Carbonell e tempero verde',
+        'Tomate Seco — Rúcula e tomate seco',
+        'Siciliana — Bacon e champignon refogado no azeite Carbonell',
+        'Lombo Canadense — Lombo com requeijão',
+        'Catuperu — Peito de peru com catupiry',
+        'Estrogonofe de Carne — Filé ao molho estrogonofe, champignon e batata palha',
+        'Estrogonofe de Frango — Cubos de frango ao molho estrogonofe, champignon e batata palha'
+      ],
+      'Doces': [
+        'Lausa — Morango, suspiro e chocolate branco',
+        'Do Norte — Chocolate preto, confete e granulado',
+        'Sensação — Chocolate preto e morango',
+        'Escadinha — Chocolate branco e morango',
+        'Meu Sonho — Chocolate branco, banana, açúcar e canela',
+        'Praia do Bispo — Chocolate branco, abacaxi e coco',
+        'Picama — Chocolate preto e banana',
+        'Só Alegria — Chocolate preto e Sonho de Valsa (***)',
+        'Maria Fernanda — Chocolate branco e Ouro Branco (***)',
+        'Banoffe — Chocolate branco, doce de leite, banana em rodelas e canela',
+        'Bica — Chocolate preto',
+        'Banca — Chocolate branco',
+        'Amores — Chocolate preto e branco',
+        'Prestígio — Chocolate preto e coco',
+        'Chokito — Chocolate preto ou branco com flocos de arroz',
+        'Charge — Chocolate preto, amendoim e doce de leite',
+        'Brigadeiro — Chocolate preto e brigadeiro em bolinhas (***)',
+        'Oreo — Chocolate preto e bolacha Oreo (***)',
+        'Oreo Baunilha — Chocolate branco e bolacha Oreo baunilha (***)',
+        'Kit Kat — Chocolate preto e Kit Kat'
+      ],
+      'Especiais Gourmets': [
+        'Pizza Fritas com Bacon — Batata frita e bacon',
+        'Pizza Fritas com Calabresa — Batata frita e calabresa',
+        'Kartoffel — Purê de batata com bacon e catupiry',
+        'Kartoffel Bolonhesa — Purê de batata, molho bolonhesa e catupiry',
+        'Bolonhesa — Carne ao molho bolonhesa e catupiry',
+        'Toscana — Calabresa com catupiry',
+        'Francesa — Salame italiano e palmito',
+        'Salaminho — Salame italiano',
+        'Coração — Coração de frango com chimichurri',
+        'Chester — Chester fatiado com tomate e azeitona verde',
+        'Peperone — Salame tipo peperone com azeitona preta',
+        'Parmegiana — Presunto, filé, parmesão e creme culinário',
+        'Vegetariana — Tomate seco, brócolis, palmito, ervilha fresca e champignon'
+      ]
+    };
+    // Função para exibir os sabores ao clicar em um tamanho de pizza
+    function mostrarSabores(tamanho) {
+      document.getElementById('tamanhos-container').style.display = 'none';
+      const saboresDiv = document.getElementById('sabores-container');
+      saboresDiv.style.display = 'block';
+      let html = `<button class="voltar-btn" onclick="voltarTamanhos()">&larr; Voltar</button>`;
+      html += `<h2 style='color:#800000; text-align:center; margin-bottom:1.2rem;'>CIDADE DO ENCANTO</h2>`;
+      html += '<div class="sabores-categorias">';
+      saboresPorCategoria['Cidade do Encanto'].forEach((sabor, idx) => {
+        html += `<div class="sabor-card">
+          <img class="sabor-card-img" src="pizza-speed.png" alt="Cidade do Encanto">
+          <div class="sabor-card-info">
+            <div class="sabor-card-titulo">${sabor.split('—')[0].trim()}</div>
+            <div class="sabor-card-lista">${sabor.split('—')[1] ? sabor.split('—')[1].trim() : ''}</div>
+          </div>
+        </div>`;
+      });
+      html += '</div>';
+      // Observações gerais
+      html += `<div style="margin-top:1.2rem; color:#800000; font-size:0.98rem; text-align:center;">`;
+      html += '<b>Observações:</b> (***): Acréscimo de R$ 10,00.<br>Todas as pizzas contêm: molho, mussarela e orégano.';
+      html += '</div>';
+      saboresDiv.innerHTML = html;
+    }
+    function voltarTamanhos() {
+      document.getElementById('sabores-container').style.display = 'none';
+      document.getElementById('tamanhos-container').style.display = 'block';
+    }
   </script>
 </body>
 </html>
